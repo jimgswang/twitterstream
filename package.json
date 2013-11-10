@@ -1,0 +1,11 @@
+{
+    "name" : "twitterpub",
+    "version" : "0.1",
+    "description" : "API for twitter public streams with best practices",
+    "keywords" : ["twitter", "streaming", "public"],
+    "homepage" : "https://github.com/jimgswang/twitterpub",
+    "author" : "jimgswang",
+    "dependencies" : {
+        "request" : "1.2.32"
+    }
+}

@@ -28,5 +28,6 @@ describe('twitterstream', function() {
             
             stream.stream({});
         });
+
     });
 });

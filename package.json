@@ -5,7 +5,7 @@
     "homepage" : "https://github.com/jimgswang/twitterpub",
     "author" : "jimgswang",
     "dependencies" : {
-        "request" : "2.27.0",
+        "request" : "2.34.0",
         "mocha" : "1.14.0",
         "nock" : "0.23.0",
         "sinon" : "1.7.3",

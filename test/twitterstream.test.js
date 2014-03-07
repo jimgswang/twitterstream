@@ -20,7 +20,7 @@ describe('twitterstream', function() {
     });
 
     describe('.stream', function() {
-        it('should fire data event on successful response', function(done) {
+        it.skip('should fire data event on successful response', function(done) {
             scope.reply(200, {stuff : 'test'});
             stream.on('data', function(data) {
                 done();

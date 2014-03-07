@@ -3,5 +3,6 @@
     "tcp_timeout_max" : 16000,
     "http_timeout_base" : 5000,
     "http_timeout_max" : 320000,
-    "http420_timeout_base" : 60000
+    "http420_timeout_base" : 60000,
+    "stall_max": 90000
 }

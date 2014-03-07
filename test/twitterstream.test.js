@@ -11,11 +11,6 @@ describe('twitterstream', function() {
         stub;
 
     beforeEach(function() {
-        scope =  nock('https://stream.twitter.com')
-                    .filteringPath(function(path) {
-                        return '/1.1/statuses/filter.json';
-                    })
-                    .post('/1.1/statuses/filter.json');
         stream = new TwitterStream({
             consumer_key: null,
             consumer_secret: null,
@@ -27,14 +22,22 @@ describe('twitterstream', function() {
         stub = sinon.stub(request, 'post', function() {
             return emitter;
         });
-
-    });
-
-    afterEach(function() {
-        stub.restore();
     });
 
     describe('.stream', function() {
+
+        beforeEach(function() {
+            scope =  nock('https://stream.twitter.com')
+                        .filteringPath(function(path) {
+                            return '/1.1/statuses/filter.json';
+                        })
+                        .post('/1.1/statuses/filter.json');
+        });
+
+        afterEach(function() {
+            stub.restore();
+        });
+
         it('should fire data event when request receives data', function(done) {
 
             stream.on('data', function(data) {
@@ -48,12 +51,22 @@ describe('twitterstream', function() {
         it('should not fire data event when request receives \r\n keep alive', function(done) {
 
             var spy = sinon.spy(done);
-            stream.on('data', spy);
-
+            stream.on('data', spy); 
             stream.stream({});
             emitter.emit('data', '\r\n');
             sinon.assert.notCalled(spy);
             done();
+        });
+    });
+
+
+    describe('.stop', function() {
+        it('should call abort function for request', function() {
+
+            var spy = emitter.abort = sinon.spy();
+            stream.stream({});
+            stream.stop();
+            sinon.assert.calledOnce(spy);
         });
     });
 });

@@ -22,6 +22,12 @@ describe('twitterstream', function() {
         stub = sinon.stub(request, 'post', function() {
             return emitter;
         });
+
+        this.clock = sinon.useFakeTimers();
+    });
+
+    afterEach(function() {
+        this.clock.restore();
     });
 
     describe('.stream', function() {
@@ -44,7 +50,7 @@ describe('twitterstream', function() {
                 done();
             });
             
-            stream.stream({});
+            stream.start({});
             emitter.emit('data', 'test');
         });
 
@@ -52,19 +58,18 @@ describe('twitterstream', function() {
 
             var spy = sinon.spy(done);
             stream.on('data', spy); 
-            stream.stream({});
+            stream.start({});
             emitter.emit('data', '\r\n');
             sinon.assert.notCalled(spy);
             done();
         });
     });
 
-
     describe('.stop', function() {
         it('should call abort function for request', function() {
 
             var spy = emitter.abort = sinon.spy();
-            stream.stream({});
+            stream.start({});
             stream.stop();
             sinon.assert.calledOnce(spy);
         });

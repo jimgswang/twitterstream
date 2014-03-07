@@ -18,13 +18,13 @@ describe('reconnect', function() {
     });
 
     it('should not fire callback before strategy.time_to_wait()', function() {
-        reconnect.backoff(wait, spy);
+        reconnect.retry_after(wait, spy);
         this.clock.tick(199);
         sinon.assert.notCalled(spy);
     });
 
     it('should fire callback after strategy.time_to_wait()', function() {
-        reconnect.backoff(wait, spy);
+        reconnect.retry_after(wait, spy);
         this.clock.tick(200);
         sinon.assert.called(spy);
     });

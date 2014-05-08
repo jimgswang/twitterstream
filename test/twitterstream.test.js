@@ -1,5 +1,4 @@
 var sinon = require('sinon'),
-    nock = require('nock'),
     request = require('request'),
     events = require('events'),
     options = require('../options.json'),
@@ -9,7 +8,7 @@ var sinon = require('sinon'),
 
 describe('twitterstream', function() {
 
-    var stream, scope,
+    var stream,
         emitter,
         stub,
         response_cb;
@@ -37,14 +36,6 @@ describe('twitterstream', function() {
     });
 
     describe('.start', function() {
-
-        beforeEach(function() {
-            scope =  nock('https://stream.twitter.com')
-                        .filteringPath(function(path) {
-                            return '/1.1/statuses/filter.json';
-                        })
-                        .post('/1.1/statuses/filter.json');
-        });
 
         afterEach(function() {
             stub.restore();
@@ -78,7 +69,6 @@ describe('twitterstream', function() {
             this.clock.tick(options.stall_max);
             stopSpy.should.be.called;
             startSpy.should.be.called;
-            sinon.assert.callOrder(stopSpy, startSpy);
         });
 
         it('should not restart after max_stall if data event is fired', function() {
@@ -93,7 +83,7 @@ describe('twitterstream', function() {
             startSpy.should.not.be.called;
         });
 
-        it.only('should call reconnect.retry start on response end', function() {
+        it('should call reconnect.retry start on response end', function() {
 
             stream.start();
             var spy = sinon.spy(reconnect, 'retry_after');
